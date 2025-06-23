@@ -1,4 +1,5 @@
 import TestClientComponent from '@/components/TestClientComponent';
+import Link from 'next/link';
 
 export default async function Home() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/hello`);
@@ -12,6 +13,12 @@ export default async function Home() {
       이건 서버 컴포넌트야. <br />
       {data.message}
       <TestClientComponent />
+      <br />
+      <Link
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+        href="/testing">
+        MBTI 시작하기
+      </Link>
     </div>
   );
 }
