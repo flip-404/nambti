@@ -1,6 +1,6 @@
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const scores = [
   { value: -2, label: '매우 아니다' },
@@ -20,6 +20,7 @@ interface Props {
 export default function QuestionItem({ userName, question, answer, setAnswer }: Props) {
   const [animate, setAnimate] = useState<boolean>(false);
   const [localAnswer, setLocalAnswer] = useState<number | undefined>(answer);
+  const $timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setLocalAnswer(answer);
@@ -29,7 +30,8 @@ export default function QuestionItem({ userName, question, answer, setAnswer }: 
     setAnimate(true);
     setLocalAnswer(value);
 
-    setTimeout(() => {
+    if ($timeoutRef.current) clearTimeout($timeoutRef.current);
+    $timeoutRef.current = setTimeout(() => {
       setAnimate(false);
       setAnswer(value);
     }, 500);
