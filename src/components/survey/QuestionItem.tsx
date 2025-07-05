@@ -1,3 +1,7 @@
+import { Button } from '../ui/button';
+import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
+
 const scores = [
   { value: -2, label: '매우 아니다' },
   { value: -1, label: '아니다' },
@@ -14,22 +18,43 @@ interface Props {
 }
 
 export default function QuestionItem({ userName, question, answer, setAnswer }: Props) {
+  const [animate, setAnimate] = useState<boolean>(false);
+  const [localAnswer, setLocalAnswer] = useState<number | undefined>(answer);
+
+  useEffect(() => {
+    setLocalAnswer(answer);
+  }, [question, answer]);
+
+  const handleAnswer = (value: number) => {
+    setAnimate(true);
+    setLocalAnswer(value);
+
+    setTimeout(() => {
+      setAnimate(false);
+      setAnswer(value);
+    }, 500);
+  };
+
   return (
     <div className="w-full flex flex-col text-center gap-4 items-center rounded-2xl py-5 px-5 bg-white shadow-lg relative">
       <div className="absolute top-2 right-4 w-3 h-3 rounded-full bg-[var(--secondary)]" />
-      <div className="text-sm text-[var(--primary)]">내가 생각하는 {userName}은?</div>
+      <div className="text-sm text-primary">내가 생각하는 {userName}은?</div>
       <div className="text-xl font-bold text-center break-keep w-[90%]">{question}</div>
       <div className="mt-10 flex flex-col items-center gap-3 w-full">
         {scores.map((score) => (
-          <button
+          <Button
             key={score.value}
-            className={`w-full h-14 rounded-2xl border-2 border-gray-200 ${score.value === answer && 'bg-[var(--primary)] text-white'}`}
+            variant={'outline'}
+            className={cn(
+              `w-full h-14 rounded-2xl border-2 border-gray-200 ${score.value === localAnswer && 'bg-primary text-white'}`,
+              score.value === localAnswer && animate && 'animate-pop animate-duration-300'
+            )}
             style={{
-              borderColor: score.value === answer ? 'var(--primary)' : '',
+              borderColor: score.value === localAnswer ? 'var(--primary)' : '',
             }}
-            onClick={() => setAnswer(score.value)}>
+            onClick={() => handleAnswer(score.value)}>
             <span>{score.label}</span>
-          </button>
+          </Button>
         ))}
       </div>
     </div>
