@@ -7,7 +7,7 @@ export default function SurveyHeader({ step, totalSteps }: Props) {
   return (
     <div className="w-full h-20 flex flex-col gap-4">
       <div className="w-full flex flex-row justify-between items-center text-sm">
-        <span className="text-primary">설문 진행중</span>
+        <span className="text-primary text-base font-semibold">설문 진행중</span>
         <span>
           {step + 1}/{totalSteps}
         </span>

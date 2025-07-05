@@ -34,7 +34,7 @@ export default function QuestionItem({ userName, question, answer, setAnswer }: 
     $timeoutRef.current = setTimeout(() => {
       setAnimate(false);
       setAnswer(value);
-    }, 500);
+    }, 400);
   };
 
   return (
