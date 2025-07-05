@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
+:root {
+  --primary: #8E48E4;
+  --secondary: #faf2fb;
+}
+
 body {
   overflow: hidden;
 }
