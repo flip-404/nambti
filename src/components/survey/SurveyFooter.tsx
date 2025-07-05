@@ -1,3 +1,6 @@
+import { Button } from '../ui/button';
+import { ChevronLeft, ChevronRight, SendHorizonal } from 'lucide-react';
+
 interface Props {
   step: number;
   setStep: (step: number) => void;
@@ -12,30 +15,46 @@ export default function SurveyFooter({ step, setStep, scores, totalSteps }: Prop
 
   return (
     <div className="flex flex-row justify-between w-full px-4 mt-auto">
-      <button
-        className="bg-gray-300 px-4 py-2 rounded-xl w-[calc(50%-0.5rem)] h-12"
+      <Button
+        variant="normal"
+        className="w-[calc(50%-0.5rem)] h-12 text-base"
+        disabled={step === 0}
         onClick={() => {
           if (step > 0) setStep(step - 1);
         }}>
-        이전
-      </button>
-      <button
+        <div className="flex flex-row w-full items-center justify-center pr-3.5">
+          <ChevronLeft />
+          <span>이전</span>
+        </div>
+      </Button>
+      <Button
+        variant="normal"
         disabled={disableNext()}
         onClick={() => {
           if (step < totalSteps) setStep(step + 1);
           else {
             // Submit logic here
             console.log('submit:', scores);
-            alert('설문이 제출되었습니다!');
+            alert('남비티아이를 완료했습니다');
           }
         }}
-        className="bg-gray-300 px-4 py-2 rounded-xl w-[calc(50%-0.5rem)] h-12 disabled:opacity-50"
+        className="w-[calc(50%-0.5rem)] h-12 text-base"
         style={{
           backgroundColor: step === totalSteps && !disableNext() ? 'var(--primary)' : '',
           color: step === totalSteps && !disableNext() ? 'white' : '',
         }}>
-        {step === totalSteps ? '완료하기' : '다음'}
-      </button>
+        {step === totalSteps ? (
+          <div className="flex flex-row w-full items-center justify-center pl-2 gap-1">
+            완료하기
+            <SendHorizonal />
+          </div>
+        ) : (
+          <div className="flex flex-row w-full items-center justify-center pl-3.5">
+            다음
+            <ChevronRight />
+          </div>
+        )}
+      </Button>
     </div>
   );
 }
