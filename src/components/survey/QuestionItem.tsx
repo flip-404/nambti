@@ -34,28 +34,28 @@ export default function QuestionItem({ userName, question, answer, setAnswer }: 
     $timeoutRef.current = setTimeout(() => {
       setAnimate(false);
       setAnswer(value);
-    }, 500);
+    }, 400);
   };
 
   return (
     <div className="w-full flex flex-col text-center gap-4 items-center rounded-2xl py-5 px-5 bg-white shadow-lg relative">
       <div className="absolute top-2 right-4 w-3 h-3 rounded-full bg-[var(--secondary)]" />
-      <div className="text-sm text-primary">내가 생각하는 {userName}은?</div>
-      <div className="text-xl font-bold text-center break-keep w-[90%]">{question}</div>
+      <div className="text-sm font-semibold text-primary">내가 생각하는 {userName}은?</div>
+      <div className="text-xl font-extrabold text-center break-keep w-[90%]">{question}</div>
       <div className="mt-10 flex flex-col items-center gap-3 w-full">
         {scores.map((score) => (
           <Button
             key={score.value}
             variant={'outline'}
             className={cn(
-              `w-full h-14 rounded-2xl border-2 border-gray-200 ${score.value === localAnswer && 'bg-primary text-white'}`,
+              `w-full h-14 text-base rounded-2xl border-2 border-gray-200 ${score.value === localAnswer && 'bg-primary text-white'}`,
               score.value === localAnswer && animate && 'animate-pop animate-duration-300'
             )}
             style={{
               borderColor: score.value === localAnswer ? 'var(--primary)' : '',
             }}
             onClick={() => handleAnswer(score.value)}>
-            <span>{score.label}</span>
+            {score.label}
           </Button>
         ))}
       </div>

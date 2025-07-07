@@ -2,6 +2,7 @@
 
 import surveyData from './survey.json';
 import QuestionItem from '@/components/survey/QuestionItem';
+import SurveyFooter from '@/components/survey/SurveyFooter';
 import SurveyHeader from '@/components/survey/SurveyHeader';
 import { useState } from 'react';
 
@@ -42,33 +43,7 @@ export default function Survey() {
           setAnswer={handleAnswer}
         />
       </div>
-      <div className="flex flex-row justify-between w-full px-4 mt-auto">
-        <button
-          className="bg-gray-300 px-4 py-2 rounded-xl w-[calc(50%-0.5rem)] h-12"
-          onClick={() => {
-            if (step > 0) setStep(step - 1);
-          }}>
-          이전
-        </button>
-        <button
-          disabled={disableNext()}
-          onClick={() => {
-            if (step < surveyData.length - 1) setStep(step + 1);
-            else {
-              // Submit logic here
-              console.log('submit:', scores);
-              alert('설문이 제출되었습니다!');
-            }
-          }}
-          className="bg-gray-300 px-4 py-2 rounded-xl w-[calc(50%-0.5rem)] h-12 disabled:opacity-50"
-          style={{
-            backgroundColor:
-              step === surveyData.length - 1 && !disableNext() ? 'var(--primary)' : '',
-            color: step === surveyData.length - 1 && !disableNext() ? 'white' : '',
-          }}>
-          {step === surveys.length - 1 ? '제출' : '다음'}
-        </button>
-      </div>
+      <SurveyFooter scores={scores} step={step} setStep={setStep} totalSteps={surveys.length - 1} />
     </div>
   );
 }
