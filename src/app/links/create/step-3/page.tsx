@@ -4,14 +4,19 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useLinkBuilderStore } from '@/store/useLinkBuilderStore';
 import { Shield, Share2, Lock, Info, ArrowRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 export default function Step3Page() {
   const { isPublic, setIsPublic } = useLinkBuilderStore();
+  const router = useRouter();
+
+  const handleContinue = () => {
+    router.push('/links/create/step-4');
+  };
 
   return (
     <>
-      {' '}
       {/* Main Card */}
       <Card className="bg-white rounded-3xl shadow-2xl overflow-hidden">
         <CardContent className="p-8">
@@ -108,7 +113,8 @@ export default function Step3Page() {
           {/* Continue Button */}
           <Button
             className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-4 rounded-2xl text-lg transition-all duration-200 transform hover:scale-105"
-            size="lg">
+            size="lg"
+            onClick={handleContinue}>
             계속하기
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
