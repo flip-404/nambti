@@ -10,7 +10,7 @@ datasource db {
 
 model User {
     id           String   @id @default(uuid()) @db.Uuid
-    username     String   @db.VarChar(20)
+    username     String   @db.VarChar(60)
     mbti         String   @db.VarChar(4)
     token        String   @unique @db.VarChar(32)
     createdAt    DateTime @default(now()) @map("created_at")
@@ -42,14 +42,14 @@ model Response {
 
 model MbtiStat {
     userId String @id @map("user_id") @db.Uuid
-    I Float
-    E Float
-    S Float
-    N Float
-    T Float
-    F Float
-    P Float
-    J Float
+    I      Float
+    E      Float
+    S      Float
+    N      Float
+    T      Float
+    F      Float
+    P      Float
+    J      Float
 
     @@map("mbti_stats")
     @@ignore // 뷰는 Prisma에서 migration으로 관리하지 않음

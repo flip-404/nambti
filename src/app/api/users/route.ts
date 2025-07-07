@@ -5,9 +5,13 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
-// 랜덤 토큰 생성 함수 (32자리)
-function generateRandomToken(): string {
-  return crypto.randomBytes(16).toString('hex');
+// username과 현재시간(난수)을 합성하여 hash token 생성 함수
+function generateHashToken(username: string): string {
+  const timestamp = Date.now().toString();
+  const randomValue = Math.random().toString(36).substring(2, 15);
+  const combinedString = `${username}_${timestamp}_${randomValue}`;
+
+  return crypto.createHash('sha256').update(combinedString).digest('hex');
 }
 
 export async function GET(request: NextRequest) {
@@ -67,7 +71,7 @@ export async function POST(request: NextRequest) {
     const maxAttempts = 10;
 
     while (!isTokenUnique && attempts < maxAttempts) {
-      token = generateRandomToken();
+      token = generateHashToken(username);
 
       // 토큰 중복 확인
       const existingUser = await prisma.user.findUnique({
