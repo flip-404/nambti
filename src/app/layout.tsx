@@ -20,19 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Asta+Sans:wght@300..800&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="w-screen h-screen">
-        <div className="flex flex-col w-full h-full bg-secondary">
-          <Header />
-          <main className="w-full h-full p-4">{children}</main>
-          <Footer />
+      <body>
+        <div className="flex flex-col min-h-screen">
+          {/* <Header /> */}
+          <main className="flex-grow p-4">{children}</main>
+          {/* <Footer /> */}
         </div>
         {children}
       </body>
