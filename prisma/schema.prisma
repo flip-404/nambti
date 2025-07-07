@@ -9,33 +9,30 @@ datasource db {
 }
 
 model User {
-    id           String   @id @default(uuid()) @db.Uuid
-    username     String   @db.VarChar(60)
-    mbti         String   @db.VarChar(4)
-    token        String   @unique @db.VarChar(32)
-    createdAt    DateTime @default(now()) @map("created_at")
-    isMbtiPublic Boolean  @default(true)
-
-    responses Response[]
+    id           String     @id @default(uuid()) @db.Uuid
+    username     String     @db.VarChar(60)
+    mbti         String     @db.VarChar(4)
+    token        String     @unique @db.VarChar(64)
+    createdAt    DateTime   @default(now()) @map("created_at")
+    isMbtiPublic Boolean    @default(true)
+    responses    Response[]
 
     @@map("users")
 }
 
 model Response {
-    id     String @id @default(uuid()) @db.Uuid
-    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId String @db.Uuid
-
-    I Int
-    E Int
-    S Int
-    N Int
-    T Int
-    F Int
-    P Int
-    J Int
-
+    id        String   @id @default(uuid()) @db.Uuid
+    userId    String   @db.Uuid
+    I         Int
+    E         Int
+    S         Int
+    N         Int
+    T         Int
+    F         Int
+    P         Int
+    J         Int
     createdAt DateTime @default(now()) @map("created_at")
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@map("responses")
 }
@@ -52,5 +49,5 @@ model MbtiStat {
     J      Float
 
     @@map("mbti_stats")
-    @@ignore // 뷰는 Prisma에서 migration으로 관리하지 않음
+    @@ignore
 }

@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     }
 
     // mbti 배열을 문자열로 변환 (예: ['E', 'N', 'F', 'P'] -> 'ENFP')
-    const mbtiString = mbti.join('');
+    const mbtiString = mbti.join('').toUpperCase();
 
     // mbti 문자열 길이 검증 (4자)
     if (mbtiString.length !== 4) {
@@ -65,26 +65,12 @@ export async function POST(request: NextRequest) {
     }
 
     // 고유한 토큰 생성 (중복 방지)
-    let token: string;
-    let isTokenUnique = false;
-    let attempts = 0;
-    const maxAttempts = 10;
+    const token = generateHashToken(username);
+    const existingUser = await prisma.user.findUnique({
+      where: { token },
+    });
 
-    while (!isTokenUnique && attempts < maxAttempts) {
-      token = generateHashToken(username);
-
-      // 토큰 중복 확인
-      const existingUser = await prisma.user.findUnique({
-        where: { token },
-      });
-
-      if (!existingUser) {
-        isTokenUnique = true;
-      }
-      attempts++;
-    }
-
-    if (!isTokenUnique) {
+    if (existingUser) {
       return NextResponse.json(
         { error: '토큰 생성에 실패했습니다. 다시 시도해주세요.' },
         { status: 500 }

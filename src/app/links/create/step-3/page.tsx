@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 export default function Step3Page() {
-  const { isPublic, setIsPublic, username, mbti } = useLinkBuilderStore();
+  const { setUsername, setMbti, isPublic, setIsPublic, username, mbti } = useLinkBuilderStore();
   const router = useRouter();
 
   const handleContinue = async () => {
@@ -24,6 +24,13 @@ export default function Step3Page() {
 
     const data = await response.json();
     router.push(`/links/complete/${data.token}`);
+
+    // Reset the store after successful creation
+    setUsername('');
+    setMbti(['', '', '', '']);
+    setIsPublic(true);
+    // Optionally, you can also reset the local storage
+    localStorage.removeItem('link-builder-storage');
   };
 
   return (
