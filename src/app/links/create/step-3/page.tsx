@@ -1,29 +1,126 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { useLinkBuilderStore } from '@/store/useLinkBuilderStore';
+import { Shield, Share2, Lock, Info, ArrowRight } from 'lucide-react';
 import React from 'react';
 
 export default function Step3Page() {
-  const buttonStyle = 'px-4 py-2 rounded bg-sky-100 text-sky-700';
-  const h3Style = 'text-lg font-bold';
+  const { isPublic, setIsPublic } = useLinkBuilderStore();
 
   return (
-    <main className="flex-1 flex flex-col justify-center items-center gap-5">
-      <div className="flex flex-col justfy-center items-center">
-        <h3 className={h3Style}>친구들에게 링크를 공유해주세요.</h3>
-      </div>
-      <div>
-        <div className="flex flex-col items-center">
-          <div>www.nambiti.com/abcd1234efgh5678</div>
-          <div className="flex gap-1">
-            <button className={buttonStyle} onClick={() => {}}>
-              클립보드로 복사
-            </button>
-            <button className={buttonStyle} onClick={() => {}}>
-              카톡으로 공유
-            </button>
+    <>
+      {' '}
+      {/* Main Card */}
+      <Card className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <CardContent className="p-8">
+          {/* Logo and Title */}
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                <div className="w-4 h-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full"></div>
+              </div>
+            </div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">NamBTI</h1>
+            <div className="w-12 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto"></div>
           </div>
-        </div>
-      </div>
-    </main>
+
+          {/* Privacy Icon */}
+          <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Shield className="w-8 h-8 text-purple-600" />
+          </div>
+
+          {/* Main Text */}
+          <div className="text-center mb-8">
+            <h2 className="text-xl font-bold text-gray-900 mb-3">
+              내 MBTI 공유여부를 선택해 주세요
+            </h2>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              비공개시 다른사람에게 절대 나의 <strong>MBTI</strong>는 보이지 않습니다.
+            </p>
+          </div>
+
+          {/* Options */}
+          <div className="space-y-4 mb-8">
+            {/* Public Option */}
+            <div
+              className={`p-4 rounded-2xl border-2 cursor-pointer transition-all ${
+                isPublic
+                  ? 'border-purple-500 bg-purple-50'
+                  : 'border-gray-200 bg-white hover:border-purple-300'
+              }`}
+              onClick={() => setIsPublic(true)}>
+              <div className="flex items-center gap-3">
+                <div
+                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                    isPublic ? 'border-purple-500' : 'border-gray-300'
+                  }`}>
+                  {isPublic && <div className="w-2.5 h-2.5 bg-purple-500 rounded-full"></div>}
+                </div>
+                <Share2 className="w-5 h-5 text-green-600" />
+                <div>
+                  <div className="font-semibold text-gray-900 flex items-center gap-2">공유</div>
+                  <div className="text-sm text-gray-600">내 MBTI를 다른 사람들과 공유합니다</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Private Option */}
+            <div
+              className={`p-4 rounded-2xl border-2 cursor-pointer transition-all ${
+                !isPublic
+                  ? 'border-purple-500 bg-purple-50'
+                  : 'border-gray-200 bg-white hover:border-purple-300'
+              }`}
+              onClick={() => setIsPublic(false)}>
+              <div className="flex items-center gap-3">
+                <div
+                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                    !isPublic ? 'border-purple-500' : 'border-gray-300'
+                  }`}>
+                  {!isPublic && <div className="w-2.5 h-2.5 bg-purple-500 rounded-full"></div>}
+                </div>
+                <Lock className="w-5 h-5 text-orange-600" />
+                <div>
+                  <div className="font-semibold text-gray-900">비공개</div>
+                  <div className="text-sm text-gray-600">내 MBTI를 비공개로 유지합니다</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Info Notice */}
+          <div className="bg-blue-50 rounded-xl p-4 mb-8">
+            <div className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+              <div className="text-sm text-blue-800">
+                <strong>안내사항</strong>
+                <br />
+                공유 설정은 언제든지 변경할 수 있으며, 비공개 선택시에도 <strong>
+                  NamBTI
+                </strong>{' '}
+                기능은 정상적으로 이용 가능합니다.
+              </div>
+            </div>
+          </div>
+
+          {/* Continue Button */}
+          <Button
+            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-4 rounded-2xl text-lg transition-all duration-200 transform hover:scale-105"
+            size="lg">
+            계속하기
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Button>
+
+          {/* Page Indicator */}
+          <div className="flex justify-center gap-2 mt-8">
+            <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+            <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+            <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+          </div>
+        </CardContent>
+      </Card>
+    </>
   );
 }

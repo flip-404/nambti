@@ -7,6 +7,8 @@ interface LinkBuilderStore {
   setUsername: (name: string) => void;
   mbti: string[];
   setMbti: (mbti: string[]) => void;
+  isPublic: boolean;
+  setIsPublic: (isPublic: boolean) => void;
 }
 
 export const useLinkBuilderStore = create<LinkBuilderStore>()(
@@ -16,6 +18,8 @@ export const useLinkBuilderStore = create<LinkBuilderStore>()(
       setUsername: (name) => set({ username: name }),
       mbti: ['', '', '', ''],
       setMbti: (mbti) => set({ mbti }),
+      isPublic: true,
+      setIsPublic: (isPublic) => set({ isPublic }),
     }),
     {
       name: 'link-builder-storage', // localStorage에 저장될 key 이름
