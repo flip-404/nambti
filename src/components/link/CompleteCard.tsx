@@ -1,8 +1,11 @@
 'use client';
 
-import React from 'react';
+import { use } from 'react';
 
-export default function Step4Page() {
+export default function CompleteCard({ params }: { params: Promise<{ tokenId: string }> }) {
+  const { tokenId } = use(params);
+  console.log('tokenId:', tokenId);
+
   const buttonStyle = 'px-4 py-2 rounded bg-sky-100 text-sky-700';
   const h3Style = 'text-lg font-bold';
 
@@ -13,7 +16,7 @@ export default function Step4Page() {
       </div>
       <div>
         <div className="flex flex-col items-center">
-          <div>www.nambiti.com/abcd1234efgh5678</div>
+          <div>www.nambiti.com/{tokenId}</div>
           <div className="flex gap-1">
             <button className={buttonStyle} onClick={() => {}}>
               클립보드로 복사

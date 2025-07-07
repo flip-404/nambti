@@ -8,11 +8,22 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 export default function Step3Page() {
-  const { isPublic, setIsPublic } = useLinkBuilderStore();
+  const { isPublic, setIsPublic, username, mbti } = useLinkBuilderStore();
   const router = useRouter();
 
-  const handleContinue = () => {
-    router.push('/links/create/step-4');
+  const handleContinue = async () => {
+    const response = await fetch('/api/users', {
+      method: 'POST',
+      body: JSON.stringify({ username, mbti, isPublic }),
+    });
+
+    if (!response.ok) {
+      alert('남비티아이 링크 생성에 실패했습니다. 다시 시도해주세요.');
+      return;
+    }
+
+    const data = await response.json();
+    router.push(`/links/complete/${data.token}`);
   };
 
   return (

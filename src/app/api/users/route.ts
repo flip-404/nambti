@@ -10,6 +10,25 @@ function generateRandomToken(): string {
   return crypto.randomBytes(16).toString('hex');
 }
 
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const tokenId = searchParams.get('tokenId');
+
+  if (!tokenId) {
+    return NextResponse.json({ error: '토큰이 없습니다.' }, { status: 400 });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { token: tokenId },
+  });
+
+  if (!user) {
+    return NextResponse.json({ error: '사용자를 찾을 수 없습니다.' }, { status: 404 });
+  }
+
+  return NextResponse.json(user);
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
