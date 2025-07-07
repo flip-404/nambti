@@ -1,16 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { useLinkBuilderStore } from '@/store/useLinkBuilderStore';
+import { useRouter } from 'next/navigation';
+import React from 'react';
 
 export default function Step1Page() {
   const h3Style = 'text-lg font-bold';
 
-  const [contentsIdx, setContentsIdx] = useState(0);
-  const [nickName, setNickName] = useState('');
-
-  const handleKeyDownNickNameInput = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') setContentsIdx(contentsIdx + 1);
-  };
+  const { username, setUsername } = useLinkBuilderStore();
+  const router = useRouter();
 
   return (
     <main className="flex-1 flex flex-col justify-center items-center gap-5">
@@ -20,10 +19,17 @@ export default function Step1Page() {
       <div>
         <input
           className="px-4 py-2 rounded border-1 bg-sky-100 border-sky-500"
-          value={nickName}
-          onChange={(e) => setNickName(e.target.value)}
-          onKeyDown={handleKeyDownNickNameInput}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
+      </div>
+      <div className="flex gap-2">
+        <Button variant="outline" onClick={() => router.push('/')}>
+          이전
+        </Button>
+        <Button disabled={!username} onClick={() => router.push('/links/create/step-2')}>
+          다음
+        </Button>
       </div>
     </main>
   );
