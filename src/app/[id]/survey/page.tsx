@@ -28,10 +28,6 @@ export default function Survey() {
     if (step < surveys.length - 1) setStep(step + 1);
   };
 
-  const disableNext = () => {
-    return scores[step] === undefined;
-  };
-
   return (
     <div className="w-full h-full flex flex-col items-center rounded-md">
       <div className="w-full p-4">
