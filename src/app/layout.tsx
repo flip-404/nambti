@@ -1,6 +1,7 @@
 import './globals.css';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import KakaoScript from '@/components/KakaoScript';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -31,6 +32,7 @@ export default function RootLayout({
         </div>
         {children}
       </body>
+      <KakaoScript />
     </html>
   );
 }
